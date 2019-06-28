@@ -9,6 +9,11 @@
 import Foundation
 
 public class BillTotalCalculator {
+    
+    /// Take a BillTotalInputModel and sum up the subtotal, apply discounts and taxes and return a BillTotalOutPutModel to that effect
+    ///
+    /// - Parameter input: A collection of items, taxes and discounts to calcualted
+    /// - Returns: A model that represents the subtotal, discounts applied, taxes applied and the due amount
     public func calculateBill(input: BillTotalInputModel) -> BillTotalOutputModel {
         let subtotal = getSubtotal(input)
         let totalTaxes = getTotalTaxes(input)
@@ -16,6 +21,10 @@ public class BillTotalCalculator {
         return BillTotalOutputModel(subtotal: subtotal, discounts: 0, tax: totalTaxes, total: 0)
     }
     
+    /// Add up the bill items and return the total value, before tax and discounts
+    ///
+    /// - Parameter input: The BillTotalInputModel that represents all items on the current bill
+    /// - Returns: The currency amount of all items on the bill, not including tax and discounts
     func getSubtotal(_ input: BillTotalInputModel) -> Float {
         var runningSubtotal: Float = 0
         
@@ -26,6 +35,12 @@ public class BillTotalCalculator {
         return runningSubtotal
     }
     
+    /// Get the total value of discounts applied to a subtotal
+    ///
+    /// - Parameters:
+    ///   - subtotal: The current subtotal from which to subtract discounts
+    ///   - discounts: An ordered array of BillDiscount objects to apply
+    /// - Returns: The currency value of discounts that have been applied (i.e. a 20% discount on a 100 subtotal returns 20)
     func getDiscount(subtotal: Float, discounts: [BillDiscount]) -> Float {
         var runningTotal: Float = 0
         var modifiedSubtotal = subtotal
@@ -56,6 +71,11 @@ public class BillTotalCalculator {
         return runningTotal
     }
     
+    
+    /// Get the total amount of tax owed on the given bill
+    ///
+    /// - Parameter input: A collection of items, taxes and discounts to be processed
+    /// - Returns: The currency value for total taxes applied to the bill object
     func getTotalTaxes(_ input: BillTotalInputModel) -> Float {
         var runningTotal: Float = 0
         
