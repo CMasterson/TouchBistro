@@ -9,22 +9,15 @@
 import Foundation
 
 public class BillTotalOutputModel {
-    let subtotal: String
-    let discounts: String
-    let tax: String
-    let total: String
+    let subtotal: Float
+    let discounts: Float
+    let tax: Float
+    let total: Float
     
-    init(subtotal: String, discounts: String, tax: String, total: String) {
+    init(subtotal: Float, discounts: Float, tax: Float) {
         self.subtotal = subtotal
         self.discounts = discounts
         self.tax = tax
-        self.total = total
-    }
-    
-    init(subtotal: Float, discounts: Float, tax: Float, total: Float) {
-        self.subtotal = "subtotal"
-        self.discounts = "discounts"
-        self.tax = "tax"
-        self.total = "total"
+        self.total = subtotal - discounts + tax
     }
 }

@@ -24,28 +24,19 @@ class BillTotalCalculatorTests: XCTestCase {
 
     
     func testBillDiscountOrder1() {
-        let subtotal: Float = 100
-        let expectedDiscountAmount: Float = 75
+        let itemValue: Float = 100
+        let expectedDiscountAmount: Float = 45
         
-        let discountAmount = billCalculator.getDiscount(subtotal: subtotal, discounts: [BillDiscount(value: 50, type: .amount), BillDiscount(value: 0.5, type: .percentile)])
+        let discountAmount = billCalculator.apply([0.5, 0.1], to: itemValue)
         
         XCTAssert(discountAmount == expectedDiscountAmount)
     }
     
     func testBillDiscountOrder2() {
-        let subtotal: Float = 100
-        let expectedDiscountAmount: Float = 100
+        let itemValue: Float = 100
+        let expectedDiscountAmount: Float = 45
         
-        let discountAmount = billCalculator.getDiscount(subtotal: subtotal, discounts: [BillDiscount(value: 0.5, type: .percentile), BillDiscount(value: 50, type: .amount)])
-        
-        XCTAssert(discountAmount == expectedDiscountAmount)
-    }
-    
-    func testBillDiscountsNegativeValue() {
-        let subtotal: Float = 100
-        let expectedDiscountAmount: Float = 100
-        
-        let discountAmount = billCalculator.getDiscount(subtotal: subtotal, discounts: [BillDiscount(value: -0.5, type: .percentile), BillDiscount(value: -50, type: .amount)])
+        let discountAmount = billCalculator.apply([0.1, 0.5], to: itemValue)
         
         XCTAssert(discountAmount == expectedDiscountAmount)
     }
@@ -78,6 +69,39 @@ class BillTotalCalculatorTests: XCTestCase {
         let subtotal = billCalculator.getSubtotal(billInputModel)
         
         XCTAssert(subtotal == expectedSubtotal)
+    }
+    
+    func testConvertDiscount1() {
+        let givenSubtotal: Float = 100
+        let expectedResult: [Float] = [0.1, 0.1]
+        
+        let discounts = [BillDiscount(value: 10, type: .amount), BillDiscount(value: 0.1, type: .percentile)]
+        
+        let actualResult = billCalculator.convertDiscountsToPercent(subtotal: givenSubtotal, discounts: discounts)
+        
+        XCTAssert(actualResult == expectedResult)
+    }
+    
+    func testConvertDiscount2() {
+        let givenSubtotal: Float = 100
+        let expectedResult: [Float] = [0.1, 0.1]
+        
+        let discounts = [BillDiscount(value: 0.1, type: .percentile), BillDiscount(value: 9, type: .amount)]
+        
+        let actualResult = billCalculator.convertDiscountsToPercent(subtotal: givenSubtotal, discounts: discounts)
+        
+        XCTAssert(actualResult == expectedResult)
+    }
+    
+    func testConvertExcessiveDiscount() {
+        let givenSubtotal: Float = 100
+        let expectedResult: [Float] = [1]
+        
+        let discounts = [BillDiscount(value: 200, type: .amount), BillDiscount(value: 0.1, type: .percentile)]
+        
+        let actualResult = billCalculator.convertDiscountsToPercent(subtotal: givenSubtotal, discounts: discounts)
+        
+        XCTAssert(actualResult == expectedResult)
     }
 
 }
