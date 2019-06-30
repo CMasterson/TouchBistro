@@ -86,45 +86,6 @@ public class BillTotalCalculator {
         return modifiedPrice
     }
     
-    /// Get the total value of discounts applied to a subtotal
-    ///
-    /// - Parameters:
-    ///   - subtotal: The current subtotal from which to subtract discounts
-    ///   - discounts: An ordered array of BillDiscount objects to apply
-    /// - Returns: The currency value of discounts that have been applied (i.e. a 20% discount on a 100 subtotal returns 20)
-//    func getDiscount(subtotal: Float, discounts: [BillDiscount]?) -> Float {
-//        guard let discounts = discounts else { return 0 }
-//
-//        var runningTotal: Float = 0
-//        var modifiedSubtotal = subtotal
-//
-//        discounts.forEach {
-//            let discountValue = $0.value.magnitude
-//
-//            if $0.type == .amount {
-//                var discountedAmount: Float = 0
-//
-//                if discountValue > modifiedSubtotal {
-//                    discountedAmount = modifiedSubtotal
-//                    modifiedSubtotal = 0
-//                } else {
-//                    discountedAmount = discountValue
-//                    modifiedSubtotal -= discountedAmount
-//                }
-//
-//                runningTotal += discountedAmount
-//
-//            } else {
-//                let discountedAmount = modifiedSubtotal * discountValue
-//                runningTotal += discountedAmount
-//                modifiedSubtotal -= discountedAmount
-//            }
-//        }
-//
-//        return runningTotal
-//    }
-    
-    
     /// Get the total amount of tax owed on the given bill
     ///
     /// - Parameter input: A collection of items, taxes and discounts to be processed

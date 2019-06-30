@@ -103,5 +103,15 @@ class BillTotalCalculatorTests: XCTestCase {
         
         XCTAssert(actualResult == expectedResult)
     }
+    
+    func testTaxes() {
+        let billItems = [MockBillItem(price: 10, taxes: [0.1, 0.1]), MockBillItem(price: 10, taxes: [0.5, 0.5])]
+        let modifiedPrices: [Float] = [10, 10]
+        let expectedResult: Float = 12
+        
+        let actualResult = billCalculator.getTotalTaxes(for: billItems, with: modifiedPrices)
+        
+        XCTAssert(actualResult == expectedResult)
+    }
 
 }
