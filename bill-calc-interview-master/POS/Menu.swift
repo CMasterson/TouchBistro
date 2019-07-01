@@ -13,18 +13,6 @@ enum DiscountType {
     case amount
 }
 
-class Tax {
-    let label: String
-    let amount: Float
-    var isEnabled: Bool
-    
-    init(label: String, amount: Float, isEnabled: Bool) {
-        self.label = label
-        self.amount = amount
-        self.isEnabled = isEnabled
-    }
-}
-
 typealias Item = (name: String, category: String, price: NSDecimalNumber, isTaxExempt: Bool)
 typealias Discount = (label: String, amount: Float, isEnabled: Bool, type: DiscountType)
 

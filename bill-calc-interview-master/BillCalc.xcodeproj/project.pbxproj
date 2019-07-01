@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4DF68B4F22C9B112001C2720 /* Tax.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DF68B4E22C9B112001C2720 /* Tax.swift */; };
 		6AD7674C2277694600FF4219 /* TaxViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD7674B2277694600FF4219 /* TaxViewController.swift */; };
 		6AD7675A227788FB00FF4219 /* DiscountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AD76759227788FB00FF4219 /* DiscountViewController.swift */; };
 		6AEC0FF1226F8718005F8B6B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AEC0FF0226F8718005F8B6B /* AppDelegate.swift */; };
@@ -35,6 +36,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4DF68B4E22C9B112001C2720 /* Tax.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tax.swift; sourceTree = "<group>"; };
 		6AD7674B2277694600FF4219 /* TaxViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaxViewController.swift; sourceTree = "<group>"; };
 		6AD76759227788FB00FF4219 /* DiscountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiscountViewController.swift; sourceTree = "<group>"; };
 		6AEC0FEE226F8717005F8B6B /* POS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = POS.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +108,7 @@
 				6AEC0FFC226F8719005F8B6B /* Info.plist */,
 				6AD7674B2277694600FF4219 /* TaxViewController.swift */,
 				6AD76759227788FB00FF4219 /* DiscountViewController.swift */,
+				4DF68B4E22C9B112001C2720 /* Tax.swift */,
 			);
 			path = POS;
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				6AEC101D226FAB32005F8B6B /* Menu.swift in Sources */,
 				6AD7675A227788FB00FF4219 /* DiscountViewController.swift in Sources */,
 				6AEC0FF3226F8718005F8B6B /* RegisterViewController.swift in Sources */,
+				4DF68B4F22C9B112001C2720 /* Tax.swift in Sources */,
 				6AD7674C2277694600FF4219 /* TaxViewController.swift in Sources */,
 				6AEC0FF1226F8718005F8B6B /* AppDelegate.swift in Sources */,
 			);
