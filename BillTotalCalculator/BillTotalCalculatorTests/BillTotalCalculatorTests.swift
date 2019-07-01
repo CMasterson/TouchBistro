@@ -44,7 +44,7 @@ class BillTotalCalculatorTests: XCTestCase {
     func testBillSubtotalSingleItem() {
         let expectedSubtotal: Float = 10
         
-        let billItems = [MockBillItem(price: 10, taxes: [0.1])]
+        let billItems = [BillItem(price: 10, taxes: [0.1])]
         let billInputModel = BillTotalInputModel(billItems: billItems)
         let subtotal = billCalculator.getSubtotal(billInputModel)
         
@@ -54,7 +54,7 @@ class BillTotalCalculatorTests: XCTestCase {
     func testBillSubtotalMultiItem() {
         let expectedSubtotal: Float = 100
         
-        let billItems = [MockBillItem(price: 10, taxes: [0.1]), MockBillItem(price: 20, taxes: [0.1]), MockBillItem(price: 30, taxes: [0.1]), MockBillItem(price: 40, taxes: [0.1])]
+        let billItems = [BillItem(price: 10, taxes: [0.1]), BillItem(price: 20, taxes: [0.1]), BillItem(price: 30, taxes: [0.1]), BillItem(price: 40, taxes: [0.1])]
         let billInputModel = BillTotalInputModel(billItems: billItems)
         let subtotal = billCalculator.getSubtotal(billInputModel)
         
@@ -64,7 +64,7 @@ class BillTotalCalculatorTests: XCTestCase {
     func testBillSubtotalMultiItemNegativeValue() {
         let expectedSubtotal: Float = 0
         
-        let billItems = [MockBillItem(price: -10, taxes: [0.1]), MockBillItem(price: 20, taxes: [0.1]), MockBillItem(price: 30, taxes: [0.1]), MockBillItem(price: -40, taxes: [0.1])]
+        let billItems = [BillItem(price: -10, taxes: [0.1]), BillItem(price: 20, taxes: [0.1]), BillItem(price: 30, taxes: [0.1]), BillItem(price: -40, taxes: [0.1])]
         let billInputModel = BillTotalInputModel(billItems: billItems)
         let subtotal = billCalculator.getSubtotal(billInputModel)
         
@@ -105,7 +105,7 @@ class BillTotalCalculatorTests: XCTestCase {
     }
     
     func testTaxes() {
-        let billItems = [MockBillItem(price: 10, taxes: [0.1, 0.1]), MockBillItem(price: 10, taxes: [0.5, 0.5])]
+        let billItems = [BillItem(price: 10, taxes: [0.1, 0.1]), BillItem(price: 10, taxes: [0.5, 0.5])]
         let modifiedPrices: [Float] = [10, 10]
         let expectedResult: Float = 12
         

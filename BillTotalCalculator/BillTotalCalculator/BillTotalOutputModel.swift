@@ -9,10 +9,10 @@
 import Foundation
 
 public class BillTotalOutputModel {
-    let subtotal: Float
-    let discounts: Float
-    let tax: Float
-    let total: Float
+    public let subtotal: Float
+    public let discounts: Float
+    public let tax: Float
+    public let total: Float
     
     init(subtotal: Float, discounts: Float, tax: Float) {
         self.subtotal = subtotal

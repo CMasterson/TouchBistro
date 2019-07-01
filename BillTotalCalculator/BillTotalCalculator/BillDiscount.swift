@@ -8,16 +8,16 @@
 
 import Foundation
 
-enum DiscountType {
+public enum DiscountType {
     case percentile
     case amount
 }
 
-class BillDiscount {
+public class BillDiscount {
     let value: Float
     let type: DiscountType
     
-    init(value: Float, type: DiscountType) {
+    public init(value: Float, type: DiscountType) {
         self.value = value
         self.type = type
     }

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import BillTotalCalculator
 
 class RegisterViewController: UIViewController {
     let cellIdentifier = "Cell"
@@ -40,6 +41,13 @@ class RegisterViewController: UIViewController {
         let vc = UINavigationController(rootViewController: DiscountViewController(style: .grouped))
         vc.modalPresentationStyle = .formSheet
         present(vc, animated: true, completion: nil)
+    }
+    
+    func refreshComputedValues() {
+        subtotalLabel.text = viewModel.subtotalText()
+        discountsLabel.text = viewModel.discountsText()
+        taxLabel.text = viewModel.taxText()
+        totalLabel.text = viewModel.totalText()
     }
 }
 
@@ -95,7 +103,9 @@ extension RegisterViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == menuTableView {
             let indexPaths = [viewModel.addItemToOrder(at: indexPath)]
             orderTableView.insertRows(at: indexPaths, with: .automatic)
-            // calculate bill totals
+            
+            viewModel.calculateBill()
+            refreshComputedValues()
         
         } else if tableView == orderTableView {
             viewModel.toggleTaxForOrderItem(at: indexPath)
@@ -117,13 +127,18 @@ extension RegisterViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == orderTableView && editingStyle == .delete {
             viewModel.removeItemFromOrder(at: indexPath)
             orderTableView.deleteRows(at: [indexPath], with: .automatic)
-            // calculate bill totals
+            
+            viewModel.calculateBill()
+            refreshComputedValues()
         }
     }
 }
 
-
 class RegisterViewModel {
+    
+    let billCalculator = BillTotalCalculator()
+    var billModel: BillTotalOutputModel?
+    
     let formatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .currency
@@ -188,5 +203,89 @@ class RegisterViewModel {
     
     func toggleTaxForOrderItem(at indexPath: IndexPath) {
         orderItems[indexPath.row].isTaxExempt = !orderItems[indexPath.row].isTaxExempt
+    }
+}
+
+extension RegisterViewModel {
+    func subtotalText() -> String? {
+        return formatNumber(billModel?.subtotal)
+    }
+    
+    func discountsText() -> String? {
+        return formatNumber(billModel?.discounts)
+    }
+    
+    func taxText() -> String? {
+        return formatNumber(billModel?.tax)
+    }
+    
+    func totalText() -> String? {
+        return formatNumber(billModel?.total)
+    }
+    
+    func formatNumber(_ number: Float?) -> String? {
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .currency
+        
+        return formatter.string(for: number)
+    }
+}
+
+extension RegisterViewModel {
+    
+    func calculateBill() {
+        let input = generateInputModel()
+        billModel = billCalculator.calculateBill(input: input)
+    }
+    
+    func generateInputModel() -> BillTotalInputModel {
+        return BillTotalInputModel(billItems: generateBillItems(), discounts: activeDiscounts())
+    }
+
+    func generateBillItems() -> [BillItem] {
+        var items = [BillItem]()
+        
+        orderItems.forEach {
+            let price = $0.price
+            var activeTaxes: [Float] = []
+            if let taxes = taxesForCategory(categoryName: $0.category) {
+                activeTaxes = activeTaxAmounts(taxes)
+            }
+            
+            items.append(BillItem(price: Float(truncating: price), taxes:activeTaxes))
+        }
+        
+        return items
+    }
+    
+    func activeTaxAmounts(_ taxes: [Tax]) -> [Float] {
+        return taxes.filter {
+            $0.isEnabled
+            }.map {
+                return $0.amount
+        }
+    }
+    
+    func taxesForCategory(categoryName: String) -> [Tax]? {
+        let category = categories.first {
+            $0.name == categoryName
+        }
+        
+        return category?.applicipleTaxes
+    }
+    
+    func activeDiscounts() -> [BillDiscount] {
+        let activeDiscounts = discounts.filter {
+            $0.isEnabled
+        }
+        let billDiscounts = activeDiscounts.map { (discount) -> BillDiscount in
+            if discount.type == .percentile {
+                return BillDiscount(value: discount.amount, type: .percentile)
+            } else {
+                return BillDiscount(value: discount.amount, type: .amount)
+            }
+        }
+        
+        return billDiscounts
     }
 }

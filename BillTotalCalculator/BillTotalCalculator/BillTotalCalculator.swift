@@ -10,6 +10,8 @@ import Foundation
 
 public class BillTotalCalculator {
     
+    public init() {}
+    
     /// Take a BillTotalInputModel and sum up the subtotal, apply discounts and taxes and return a BillTotalOutPutModel to that effect
     ///
     /// - Parameter input: A collection of items, taxes and discounts to calcualted

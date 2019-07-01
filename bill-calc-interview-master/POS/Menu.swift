@@ -8,7 +8,14 @@
 
 import Foundation
 
+enum DiscountType {
+    case percentile
+    case amount
+}
+
 typealias Item = (name: String, category: String, price: NSDecimalNumber, isTaxExempt: Bool)
+typealias Tax = (label: String, amount: Float, isEnabled: Bool)
+typealias Discount = (label: String, amount: Float, isEnabled: Bool, type: DiscountType)
 
 func category(_ category: String) -> (String, NSDecimalNumber) -> Item {
     return { name, price in
@@ -45,13 +52,13 @@ let alcoholCategory = [
     alcohol("Wine", 7.00),
 ]
 
-let tax1 = (label: "Tax 1 (5%)", amount: 0.05, isEnabled: true)
-let tax2 = (label: "Tax 2 (8%)", amount: 0.08, isEnabled: true)
-let alcoholTax = (label: "Alcohol Tax (10%)", amount: 0.10, isEnabled: true)
+let tax1 = Tax(label: "Tax 1 (5%)", amount: 0.05, isEnabled: true)
+let tax2 = Tax(label: "Tax 2 (8%)", amount: 0.08, isEnabled: true)
+let alcoholTax = Tax(label: "Alcohol Tax (10%)", amount: 0.10, isEnabled: true)
 
-let discount5Dollars = (label: "$5.00", amount: 5.00, isEnabled: false)
-let discount10Percent = (label: "10%", amount: 0.10, isEnabled: false)
-let discount20Percent = (label: "20%", amount: 0.20, isEnabled: false)
+let discount5Dollars = Discount(label: "$5.00", amount: 5.00, isEnabled: false, type: .amount)
+let discount10Percent = Discount(label: "10%", amount: 0.10, isEnabled: false, type: .percentile)
+let discount20Percent = Discount(label: "20%", amount: 0.20, isEnabled: false, type: .percentile)
 
 var taxes = [
     tax1,
@@ -66,8 +73,8 @@ var discounts = [
 ]
 
 var categories = [
-    (name: "Appetizers", items: appetizersCategory),
-    (name: "Mains", items: mainsCategory),
-    (name: "Drinks", items: drinksCategory),
-    (name: "Alcohol", items: alcoholCategory),
+    (name: "Appetizers", items: appetizersCategory, applicipleTaxes: [tax1, tax2]),
+    (name: "Mains", items: mainsCategory, applicipleTaxes: [tax1, tax2]),
+    (name: "Drinks", items: drinksCategory, applicipleTaxes: [tax1, tax2]),
+    (name: "Alcohol", items: alcoholCategory, applicipleTaxes: [tax1, tax2, alcoholTax]),
 ]

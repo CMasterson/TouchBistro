@@ -8,7 +8,12 @@
 
 import Foundation
 
-protocol BillItem {
-    var price: Float { get }
-    var taxes: [Float] { get }
+public class BillItem {
+    let price: Float
+    let taxes: [Float]
+    
+    public init(price: Float, taxes: [Float]) {
+        self.price = price
+        self.taxes = taxes
+    }
 }

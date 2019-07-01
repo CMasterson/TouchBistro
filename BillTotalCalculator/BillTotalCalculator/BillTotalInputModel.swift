@@ -12,7 +12,7 @@ public class BillTotalInputModel {
     let billItems: [BillItem]
     let discounts: [BillDiscount]?
     
-    init(billItems: [BillItem], discounts: [BillDiscount]? = nil) {
+    public init(billItems: [BillItem], discounts: [BillDiscount]? = nil) {
         self.billItems = billItems
         self.discounts = discounts
     }

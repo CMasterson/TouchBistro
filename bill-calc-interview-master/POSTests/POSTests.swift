@@ -30,5 +30,21 @@ class POSTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func testFormatNumber() {
+        let rvc = RegisterViewController(nibName: nil, bundle: nil)
+        let expectedResult = "$1,000.99"
+        let actualNumber = rvc.viewModel.formatNumber(1000.99)
+        
+        XCTAssert(actualNumber == expectedResult)
+    }
+    
+    func testFormatNumberNil() {
+        let rvc = RegisterViewController(nibName: nil, bundle: nil)
+        let expectedResult: String = ""
+        let actualNumber = rvc.viewModel.formatNumber(nil)
+        
+        XCTAssert(actualNumber == expectedResult)
+    }
 
 }
