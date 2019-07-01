@@ -108,14 +108,14 @@ extension RegisterViewController: UITableViewDataSource, UITableViewDelegate {
         if tableView == menuTableView {
             let indexPaths = [viewModel.addItemToOrder(at: indexPath)]
             orderTableView.insertRows(at: indexPaths, with: .automatic)
-            
-            viewModel.calculateBill()
-            refreshComputedValues()
         
         } else if tableView == orderTableView {
             viewModel.toggleTaxForOrderItem(at: indexPath)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
+        
+        viewModel.calculateBill()
+        refreshComputedValues()
     }
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
@@ -253,7 +253,7 @@ extension RegisterViewModel {
         orderItems.forEach {
             let price = $0.price
             var activeTaxes: [Float] = []
-            if let taxes = taxesForCategory(categoryName: $0.category) {
+            if $0.isTaxExempt == false, let taxes = taxesForCategory(categoryName: $0.category) {
                 activeTaxes = activeTaxAmounts(taxes)
             }
             

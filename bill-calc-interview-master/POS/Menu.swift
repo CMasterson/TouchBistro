@@ -13,8 +13,19 @@ enum DiscountType {
     case amount
 }
 
+class Tax {
+    let label: String
+    let amount: Float
+    var isEnabled: Bool
+    
+    init(label: String, amount: Float, isEnabled: Bool) {
+        self.label = label
+        self.amount = amount
+        self.isEnabled = isEnabled
+    }
+}
+
 typealias Item = (name: String, category: String, price: NSDecimalNumber, isTaxExempt: Bool)
-typealias Tax = (label: String, amount: Float, isEnabled: Bool)
 typealias Discount = (label: String, amount: Float, isEnabled: Bool, type: DiscountType)
 
 func category(_ category: String) -> (String, NSDecimalNumber) -> Item {
@@ -61,7 +72,7 @@ let discount10Percent = Discount(label: "10%", amount: 0.10, isEnabled: false, t
 let discount20Percent = Discount(label: "20%", amount: 0.20, isEnabled: false, type: .percentile)
 
 var taxes = [
-    tax1,
+    tax1,   
     tax2,
     alcoholTax,
 ]
