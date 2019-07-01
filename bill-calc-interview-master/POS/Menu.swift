@@ -72,7 +72,7 @@ let discount10Percent = Discount(label: "10%", amount: 0.10, isEnabled: false, t
 let discount20Percent = Discount(label: "20%", amount: 0.20, isEnabled: false, type: .percentile)
 
 var taxes = [
-    tax1,   
+    tax1,
     tax2,
     alcoholTax,
 ]
