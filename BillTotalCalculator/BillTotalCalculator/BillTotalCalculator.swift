@@ -40,6 +40,12 @@ public class BillTotalCalculator {
         return runningSubtotal
     }
     
+    /// Converts currency value discounts to their percentage equivelant. If a discount takes the subtotal below 0; return one 100% discount
+    ///
+    /// - Parameters:
+    ///   - subtotal: The subtotal of BillItems before tax anx discounts
+    ///   - discounts: Array of BillDiscounts to be applied
+    /// - Returns: Array of floats representing all discounts as percentages
     func convertDiscountsToPercent(subtotal: Float, discounts: [BillDiscount]?) -> [Float] {
         guard let discounts = discounts else { return [] }
         
@@ -65,6 +71,12 @@ public class BillTotalCalculator {
         return returnArray
     }
     
+    /// Iterates through given BillItems and applies given percentile discounts to each.
+    ///
+    /// - Parameters:
+    ///   - discounts: Array of percentile discounts to apply to all BillItems
+    ///   - items: Immutable Array of BillItems to which discounts will be applied
+    /// - Returns: A Tuple that contains the new post-discount prices of the BillItems and the total amount that was discounted from all billItems
     func apply(_ discounts: [Float], to items: [BillItem]) -> (modifiedPrices: [Float], discountedAmount: Float) {
         var runningTotal: Float = 0
         var modifiedPrices = [Float]()
@@ -79,6 +91,12 @@ public class BillTotalCalculator {
         return (modifiedPrices, runningTotal)
     }
     
+    /// Apply the discounts to the given price, return the new price after discounts have been applied
+    ///
+    /// - Parameters:
+    ///   - discounts: Array of percentile values to subtract from the price
+    ///   - price: The starting price of the BillItem before tax and discounts
+    /// - Returns: The new modified price of the BillItem after discounts have been applied
     func apply(_ discounts: [Float], to price: Float) -> Float {
         var modifiedPrice = price
         discounts.forEach {
