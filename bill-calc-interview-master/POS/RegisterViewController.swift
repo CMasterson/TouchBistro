@@ -31,6 +31,11 @@ class RegisterViewController: UIViewController {
         orderTableView.delegate = self
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        viewModel.calculateBill()
+        refreshComputedValues()
+    }
+    
     @IBAction func showTaxes() {
         let vc = UINavigationController(rootViewController: TaxViewController(style: .grouped))
         vc.modalPresentationStyle = .formSheet
